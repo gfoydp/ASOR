@@ -1,9 +1,14 @@
 #include <sys/types.h>
 #include <unistd.h>
+#include <stdio.h>
+
 
 
 int main() {
-   setuid(0);
+   
+   if(setuid(0) == -1){
+       perror("hola");
+   }
    return 1;
 }
 
