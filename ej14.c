@@ -15,7 +15,6 @@ int main() {
         return -1;
     }
 
-    y->tm_year;
 
     printf("El año es %d \n",y->tm_year + 1900);
 
