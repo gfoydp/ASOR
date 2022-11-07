@@ -1,6 +1,7 @@
 #include <sys/types.h>
 #include <pwd.h>
 #include <stdio.h>
+ #include <errno.h>
 
 
 
