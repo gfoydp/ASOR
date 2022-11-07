@@ -7,7 +7,7 @@
 int main() {
    
    if(setuid(0) == -1){
-       perror("hola");
+       perror("Error: ");
    }
    return 1;
 }
