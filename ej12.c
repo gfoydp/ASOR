@@ -11,7 +11,7 @@ int main() {
         perror("Error: ");
     }
     else{
-    printf("Nombre de segundos: %d \n", t);
+    printf("Numero de segundos desde EPOCH: %d \n", t);
 
     }
 
