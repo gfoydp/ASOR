@@ -20,7 +20,10 @@ int main() {
 
 	setlocale(LC_ALL,"es_ES");
 
-    strftime(buffer,50,"%A, %d de %B de %Y, %R",lt);
+    if(strftime(buffer,50,"%A, %d de %B de %Y, %R",lt)==0){
+        perror("Error: ");
+        return -1;
+    }
 
     printf("Dia: %s \n",buffer);
 
