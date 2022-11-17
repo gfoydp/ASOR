@@ -4,6 +4,8 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <errno.h>
+#include <time.h>
+
 
 
 
@@ -28,7 +30,7 @@ int main(int argc, char ** argv) {
     printf("Major: %d\n",major(sb.st_dev));
     printf("Minor: %d\n",minor(sb.st_dev));
     printf("Inodo: %d\n",sb.st_ino);
-    printf("Ultima fecha de acceso: %d\n",ctime(&sb.st_mtime));
+    printf("Ultima fecha de acceso: %s",ctime(&sb.st_mtime));
 
     return 0;
    
