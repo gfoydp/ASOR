@@ -9,12 +9,17 @@
 
 int main() {
    int fd;
+
+
+   umask(0027);
+
    fd = open("prueba.txt", O_RDWR | O_CREAT,00645);
 
    if(fd == -1){
     perror("Error al abrir o crear fichero: ");
     return -1;
    }
+   
     return 0;
    
 }

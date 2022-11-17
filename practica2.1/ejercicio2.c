@@ -11,7 +11,7 @@
 int main() {
    
    if(setuid(0) == -1){
-       perror("Error with perror");
+       perror("Error con perror");
        printf("Error %d: %s\n", errno, strerror(errno));
    }
    return 1;
