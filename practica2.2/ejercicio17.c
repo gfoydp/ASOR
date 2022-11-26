@@ -15,7 +15,7 @@ int main(int argc, char ** argv) {
     struct stat file_info;
     ssize_t r;
     char buf[50];
-    int blocks;
+    int size = 0;
 
 
 
@@ -30,6 +30,11 @@ int main(int argc, char ** argv) {
 
     DIR *dir = opendir(dirname);
 
+    if (dir == NULL) {
+		perror("Error al abrir el directorio");
+		return -1;
+	}
+
     while ((dp = readdir(dir)) != NULL)
 	{
         if (strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0)
@@ -37,6 +42,7 @@ int main(int argc, char ** argv) {
 			
             if (dp->d_type == DT_REG) {
                 printf("%s* \n",dp->d_name);
+                size += dp->d_reclen;
             }
             else if (dp->d_type == DT_DIR) {
                 printf("%s/ \n",dp->d_name);
@@ -46,17 +52,14 @@ int main(int argc, char ** argv) {
                 if (rl == -1)
                     perror("Error al leer el enlace");
                 else{
-                    buf[sizeof(buf)] = '\0';
+                    buf[rl] = '\0';
                     printf("%s -> %s\n", dp->d_name, buf);
                 } 
-                }
+            }
 
-			//blocks += file_info.st_blocks;
-           // printf("%ldK      %s\n",file_info.st_blocks/2,dp->d_name);
-
-           // get_size_dir(path,blocks);
         }
     }
+    printf("Tamaño total de los ficheros: %d KB \n",size);
     closedir(dir);
 
 
