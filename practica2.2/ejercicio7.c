@@ -19,7 +19,7 @@ int main() {
     perror("Error al abrir o crear fichero: ");
     return -1;
    }
-   
+   close(fd);
     return 0;
    
 }

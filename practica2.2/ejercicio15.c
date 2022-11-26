@@ -17,6 +17,11 @@ int main(int argc, char ** argv) {
     t = time(&t);
     int fd;
 
+    if (argc != 2) {
+		printf("Usage: ./ejercicio15 <file>\n");
+		return -1;
+	}
+
     if((lt=localtime(&t)) == NULL){
         perror("Error: ");
         return -1;

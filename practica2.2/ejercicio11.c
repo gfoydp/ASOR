@@ -12,6 +12,12 @@
 
 int main(int argc, char ** argv) {
     struct stat sb;
+
+  if (argc != 2) {
+		printf("Usage: ./ejercicio11 <file>\n");
+		return -1;
+	}
+
     if(stat(argv[1], &sb)==-1){
         perror("Error: ");
         return -1;
@@ -19,9 +25,7 @@ int main(int argc, char ** argv) {
 
     if (S_ISREG(sb.st_mode)) {
 
-        //char * destino;
         char * hard, sym;
-        //destino = malloc(strlen(argv[1])+6);
 
         char *destino = malloc(strlen(argv[1])+6);
         sprintf(destino, "%s.hard", argv[1]);
@@ -35,7 +39,7 @@ int main(int argc, char ** argv) {
             return -1;
         }
 
-   // free(destino);
+         free(destino);
 
     }
 

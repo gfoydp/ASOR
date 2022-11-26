@@ -11,6 +11,12 @@
 
 int main(int argc, char ** argv) {
     struct stat sb;
+
+    if (argc != 2) {
+		printf("Usage: ./ejercicio9 <file>\n");
+		return -1;
+	}
+
     if(stat(argv[1], &sb)==-1){
         perror("Error: ");
         return -1;
