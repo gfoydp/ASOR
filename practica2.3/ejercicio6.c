@@ -53,8 +53,11 @@ int main() {
 
         printf("PID %d \nPPID %d \nPGID %d \nSID %d\n ",pid,ppid,pgid,sid);
         printf("Maximo de ficheros que se puede abrir %d\n ",rlim.rlim_max);
-        printf("Directorio de trabajo actual %s ",buffer);
+        printf("Directorio de trabajo actual %s \n",buffer);
 
+    }
+    else{
+        sleep(3);
     }
    
 
