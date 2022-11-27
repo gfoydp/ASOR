@@ -1,0 +1,7 @@
+1. 
+ps $USER -l
+2.
+ps -eo pid,pgid,session,state,ucomm
+3.
+Comparten el identificador de sesion, el identificador del grupo es igual que el del proceso al crearlo 
+excepto cuando un proceso es hijo de otro que se hereda el pgid.
