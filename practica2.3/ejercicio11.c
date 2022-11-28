@@ -8,7 +8,6 @@
 
 
 int main(int argc, char **argv) {
-    pid_t p;
     char* sec;
     int seconds;
 
