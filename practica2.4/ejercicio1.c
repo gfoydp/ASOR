@@ -8,6 +8,12 @@ int main(int argc, char** argv) {
 
     int fd[2];
 
+    if(argc != 5) {
+    fprintf(stderr, "Usage: %s <comando1> <arg1> <comando2> <arg2>",
+    argv[0]);
+    }
+
+
     if(pipe(fd) == -1){
     perror("Error al crear el pipe: ");
     return -1;
