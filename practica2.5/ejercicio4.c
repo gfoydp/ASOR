@@ -7,6 +7,9 @@
 #include <netdb.h>
 #include <string.h>
 #include <time.h>
+#include <sys/select.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 
 
@@ -21,6 +24,7 @@ int main(int argc, char** argv) {
     struct sockaddr_storage addr;
     socklen_t addrlen = sizeof(addr);
     size_t sz;
+    fd_set set;
 
 
     if(argc != 3) {
@@ -30,7 +34,7 @@ int main(int argc, char** argv) {
     memset(&hints, 0, sizeof(struct addrinfo));
     hints.ai_family = AF_UNSPEC;    
     hints.ai_socktype = SOCK_DGRAM; 
-    hints.ai_flags = AI_PASSIVE;    
+    hints.ai_flags = AI_PASSIVE;     
 
 
     s = getaddrinfo(argv[1],argv[2], &hints, &result);
@@ -54,12 +58,26 @@ int main(int argc, char** argv) {
     }
 
     while(!fin){
+
+        FD_ZERO(&set);
+		FD_SET(0, &set); 
+		FD_SET(socket, &set);
+        s = select(socket + 1, &set,NULL,NULL,NULL);
+        if(sckt == -1){
+        perror("Error al hacer el select:");
+		return -1;
+        }
+        if (FD_ISSET(0, &set)) {
+				bytes = read(0, buffer, 256);
+				printf("Recibidos %d bytes de la entrada estándar\n", bytes);
+		}
+        else{
         bytes = recvfrom(sckt, buffer, 256, 0, (struct sockaddr *) &addr, &addrlen);
         buffer[bytes] = '\0';
 
         s = getnameinfo((struct sockaddr *) &addr, addrlen, hbuf, NI_MAXHOST, sbuf, NI_MAXSERV, NI_NUMERICHOST | NI_NUMERICSERV);
         printf("%d bytes de %s:%s\n", bytes, hbuf, sbuf);
-
+        }
         time_t t;
         t = time(NULL);
 		t_info = localtime(&t);	
@@ -76,8 +94,10 @@ int main(int argc, char** argv) {
         if(buffer[0] == 'q'){
             fin = 1;
         }
-
-        bytes = sendto(sckt, buffer, sz, 0, (struct sockaddr *) &addr, addrlen);
+        if (FD_ISSET(0, &set)) printf("%s\n", buffer);
+	
+        else bytes = sendto(sckt, buffer, sz, 0, (struct sockaddr *) &addr, addrlen);
+        
 
     }
 

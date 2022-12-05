@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
 
     sckt = socket(result->ai_family,result->ai_socktype, result->ai_protocol);
 
-    if(s == -1){
+    if(sckt == -1){
         perror("Error al crear el socket:");
 		return -1;
     }
