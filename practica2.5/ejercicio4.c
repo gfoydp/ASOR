@@ -34,7 +34,7 @@ int main(int argc, char** argv) {
     memset(&hints, 0, sizeof(struct addrinfo));
     hints.ai_family = AF_UNSPEC;    
     hints.ai_socktype = SOCK_DGRAM; 
-    hints.ai_flags = AI_PASSIVE;     
+    // hints.ai_flags = AI_PASSIVE;     
 
 
     s = getaddrinfo(argv[1],argv[2], &hints, &result);
@@ -60,9 +60,9 @@ int main(int argc, char** argv) {
     while(!fin){
 
         FD_ZERO(&set);
-		FD_SET(0, &set); 
-		FD_SET(socket, &set);
-        s = select(socket + 1, &set,NULL,NULL,NULL);
+	    FD_SET(0, &set); 
+		FD_SET(sckt, &set);
+        s = select(sckt + 1, &set,0,0,0);
         if(sckt == -1){
         perror("Error al hacer el select:");
 		return -1;
