@@ -94,10 +94,12 @@ int main(int argc, char** argv) {
         if(buffer[0] == 'q'){
             fin = 1;
         }
-        if (FD_ISSET(0, &set)) printf("%s\n", buffer);
-	
-        else bytes = sendto(sckt, buffer, sz, 0, (struct sockaddr *) &addr, addrlen);
-        
+        if (FD_ISSET(0, &set)){
+        printf("%s\n", buffer);
+        } 
+        else{
+            bytes = sendto(sckt, buffer, sz, 0, (struct sockaddr *) &addr, addrlen);
+        }
 
     }
 
