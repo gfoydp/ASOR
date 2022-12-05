@@ -31,7 +31,10 @@ int main(int argc, char** argv) {
     return -1;
    }
 
-   if(pipe1>pipe2) pmax = pipe1;
+   
+   while(1){
+
+    if(pipe1>pipe2) pmax = pipe1;
    else pmax = pipe2;
 
    FD_ZERO(&set);
@@ -49,8 +52,10 @@ int main(int argc, char** argv) {
             close(pipe1);
 			pipe1 = open("pipe", O_RDONLY | O_NONBLOCK);
             }
-			buffer[bytes] = '\0';
-			printf("Leyendo de pipe2: %s", buffer);
+			else{
+            buffer[bytes] = '\0';
+			printf("Leyendo de pipe1: %s", buffer);
+            }
 		}
 	else {
 			bytes = read(pipe2, buffer, 256);
@@ -58,9 +63,13 @@ int main(int argc, char** argv) {
             close(pipe2);
 			pipe2 = open("pipe2", O_RDONLY | O_NONBLOCK);
             }
+            else{
 			buffer[bytes] = '\0';
 			printf("Leyendo de pipe2: %s", buffer);
+            }
 		}
+
+    }
    
     close(pipe1);
     close(pipe2);
