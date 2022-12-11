@@ -58,6 +58,7 @@ int main(int argc, char** argv) {
         pid = fork();
         if(pid == -1){
             perror("Error al realizar fork:");
+            return -1;
         }
         else if(pid == 0){
             while(!fin){
