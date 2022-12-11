@@ -9,7 +9,9 @@
 #include <string.h>
 #include <time.h>
 
-
+void handler(int sig){
+    wait(NULL);
+}
 
 
 int main(int argc, char** argv) {
@@ -22,6 +24,7 @@ int main(int argc, char** argv) {
     struct sockaddr_storage addr;
     socklen_t addrlen = sizeof(addr);
     size_t sz;
+    struct sigaction sa;
 
 
     if(argc != 3) {
@@ -58,6 +61,12 @@ int main(int argc, char** argv) {
         perror("Error al realizar listen:");
 		return -1;
     }
+    sa.sa_handler = handler; 
+     if (sigaction(SIGCHLD, &sa, NULL) == -1){
+        perror("Error en sigaction");
+        return -1;
+    }
+    signal(SIGCHLD , handler);
     while(1){
         int clisd = accept(sckt, (struct sockaddr *) &addr, &addrlen);
 
@@ -79,6 +88,7 @@ int main(int argc, char** argv) {
         send(clisd, buffer, c, 0);
         }
         printf("Saliendo del proceso %d\n",getpid());
+        return 0;
         }
         else{
             close(clisd);
