@@ -15,7 +15,7 @@ int main(int argc, char** argv) {
 
     struct addrinfo hints;
     struct addrinfo *result, *rp;
-    int s, bytes, fin = 0, sckt;
+    int s, bytes, fin = 0, sckt,c;
     char hbuf[NI_MAXHOST], sbuf[NI_MAXSERV], buffer[256];
     struct tm * t_info;
     struct sockaddr_storage addr;
@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
 
     memset(&hints, 0, sizeof(struct addrinfo));
     hints.ai_family = AF_UNSPEC;    
-    hints.ai_socktype = SOCK_DGRAM; 
+    hints.ai_socktype = SOCK_STREAM; 
     hints.ai_flags = AI_PASSIVE;    
 
 
@@ -53,12 +53,12 @@ int main(int argc, char** argv) {
 		return -1;
     }
 
-    if(listen(sckt,5)==-1){
+    if((listen(sckt,5))==-1){
         perror("Error al realizar listen:");
 		return -1;
     }
 
-    int clisd = accept(sd, (struct sockaddr *) &addr, &addrlen);
+    int clisd = accept(sckt, (struct sockaddr *) &addr, &addrlen);
     s = getnameinfo((struct sockaddr *) &addr, addrlen, hbuf, NI_MAXHOST, sbuf, NI_MAXSERV, NI_NUMERICHOST | NI_NUMERICSERV);
 	printf("Conexión desde %s:%s\n", hbuf, sbuf);
      while (c = recv(clisd, buffer, 256, 0)) { 
